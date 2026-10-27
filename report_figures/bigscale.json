@@ -1,0 +1,156 @@
+{
+  "spark_version": "4.2.0",
+  "m5_etl": {
+    "sales_wide_rows": 30490,
+    "day_columns": 1941,
+    "calendar_rows": 1969,
+    "price_rows": 6841121,
+    "unified_rows": 59181090,
+    "daily_agg_rows": 58230,
+    "t_read_s": 5.8,
+    "t_unpivot_join_s": 11.3,
+    "t_aggregate_s": 5.1,
+    "t_total_s": 22.2,
+    "source_bytes": 325235772
+  },
+  "large_file": {
+    "file_bytes": 3796770302,
+    "total_rows": 58327370,
+    "time_col": null,
+    "sample_rows": 250891,
+    "columns": [
+      "store_id",
+      "sales",
+      "wm_yr_wk",
+      "wday",
+      "snap",
+      "year",
+      "month",
+      "day",
+      "lag_1",
+      "item_category",
+      "item_subcategory",
+      "item_number",
+      "sell_price",
+      "price_flag",
+      "is_weekend",
+      "snap_weekend",
+      "wday_x_snap",
+      "lag_7",
+      "is_event",
+      "event_count",
+      "event_impact"
+    ],
+    "t_ingest_s": 194.0,
+    "t_forecast_s": 71.7,
+    "t_segment_s": 162.9,
+    "forecasting": {
+      "skipped": false,
+      "skip_reason": null,
+      "target_column": "sales",
+      "time_column": "_composed_date",
+      "n_features": 20,
+      "train_rows": 400767,
+      "test_rows": 100192,
+      "models": {
+        "Linear Regression": {
+          "rmse": 2.2918,
+          "mae": 0.9666,
+          "r2": 0.6309
+        },
+        "Random Forest": {
+          "rmse": 1.7939,
+          "mae": 0.678,
+          "r2": 0.7739
+        },
+        "Gradient Boosting": {
+          "rmse": 2.0666,
+          "mae": 0.7014,
+          "r2": 0.6999
+        }
+      },
+      "best_model": "Random Forest",
+      "feature_importance": {
+        "lag_1": 0.4473,
+        "lag_7": 0.267,
+        "event_impact": 0.1689,
+        "sell_price": 0.0312,
+        "store_id_idx": 0.0153,
+        "wday": 0.01,
+        "wm_yr_wk": 0.0096,
+        "item_number": 0.0086,
+        "item_subcategory": 0.0075,
+        "day": 0.0071
+      }
+    },
+    "segmentation": {
+      "skipped": false,
+      "skip_reason": null,
+      "method": "Spark MLlib K-Means on numeric features (no customer/date columns found)",
+      "k": 3,
+      "silhouette": 0.3857,
+      "n_entities": 500959,
+      "segments": [
+        {
+          "segment": 0,
+          "size": 162989,
+          "profile": {
+            "sales": 0.92,
+            "wm_yr_wk": 24.66,
+            "wday": 3.99,
+            "snap": 1.0,
+            "year": 2013.23,
+            "month": 6.33,
+            "day": 7.22,
+            "lag_1": 0.89
+          }
+        },
+        {
+          "segment": 1,
+          "size": 5080,
+          "profile": {
+            "sales": 26.83,
+            "wm_yr_wk": 25.15,
+            "wday": 3.7,
+            "snap": 0.37,
+            "year": 2013.24,
+            "month": 6.33,
+            "day": 14.75,
+            "lag_1": 26.5
+          }
+        },
+        {
+          "segment": 2,
+          "size": 332890,
+          "profile": {
+            "sales": 0.84,
+            "wm_yr_wk": 26.24,
+            "wday": 4.0,
+            "snap": 0.0,
+            "year": 2013.2,
+            "month": 6.37,
+            "day": 19.91,
+            "lag_1": 0.86
+          }
+        }
+      ]
+    },
+    "executor_threads": 16,
+    "kmeans_restarts_per_k": 5,
+    "validation_rules_stood_down": {
+      "sell_price": {
+        "violations": 13017673,
+        "fraction": 0.2232,
+        "action": "kept - state encoded by the column"
+      },
+      "price_flag": {
+        "violations": 45309697,
+        "fraction": 0.7768,
+        "action": "kept - state encoded by the column"
+      }
+    },
+    "rows_after_clean": 58327370,
+    "time_column": "_composed_date",
+    "split_basis": "chronological on a timestamp composed from the year, month and day columns; before this the table carried no date column and the split silently fell back to file order, which is ordered by item series and spans the full period on both sides"
+  }
+}

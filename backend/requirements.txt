@@ -1,0 +1,27 @@
+# Autolyze Backend – Python dependencies
+# Install with: pip install -r requirements.txt
+
+# ── Web framework ─────────────────────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart>=0.0.18
+bcrypt>=5.0.0
+python-jose[cryptography]>=3.3.0
+
+# ── HTTP client (async calls to LM Studio) ────────────────────────────────────
+httpx==0.27.0
+
+# ── Data processing & ML ─────────────────────────────────────────────────────
+pandas>=2.0.0
+numpy>=1.26.0
+pyspark>=3.5.0           # Apache Spark: distributed ETL + MLlib models (needs Java 17+)
+pyarrow>=14.0.0          # Fast pandas <-> Spark conversion
+scikit-learn>=1.3.0      # Fallback forecasting/segmentation when Spark is unavailable
+openpyxl>=3.1.0          # Excel (.xlsx) support
+xlrd>=2.0.1              # Legacy Excel (.xls) support
+
+# ── Validation ────────────────────────────────────────────────────────────────
+pydantic==2.7.1
+
+# Testing
+pytest>=8.0

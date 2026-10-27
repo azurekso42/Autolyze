@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autolyze - AI Analytics Platform</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='bgGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23120822'/%3E%3Cstop offset='100%25' stop-color='%23020008'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%239b5de5'/%3E%3Cstop offset='100%25' stop-color='%233b82f6'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2306b6d4'/%3E%3Cstop offset='100%25' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3CradialGradient id='sphereGlow' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='30%25' stop-color='%237c3aed' stop-opacity='0.3'/%3E%3Cstop offset='100%25' stop-color='%231e0050' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='url(%23bgGrad)' stroke='%233b82f6' stroke-width='2' stroke-opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='28' fill='url(%23sphereGlow)' stroke='%237c3aed' stroke-width='2' stroke-opacity='0.8'/%3E%3Cellipse cx='60' cy='60' rx='14' ry='28' fill='none' stroke='%239b5de5' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cellipse cx='60' cy='60' rx='28' ry='9' fill='none' stroke='%239b5de5' stroke-width='1.5' stroke-opacity='0.5'/%3E%3Cellipse cx='60' cy='60' rx='46' ry='16' fill='none' stroke='url(%23ring1)' stroke-width='3.5' stroke-linecap='round' transform='rotate(25 60 60)'/%3E%3Cellipse cx='60' cy='60' rx='40' ry='22' fill='none' stroke='url(%23ring2)' stroke-width='3' stroke-linecap='round' transform='rotate(-35 60 60)'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,300;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js">
+</script>
+
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     LOGIN OVERLAY
+══════════════════════════════════════════════════════ -->
+<div id="login-overlay">
+  <div id="login-card">
+    <div id="login-logo">autolyze</div>
+    <div id="login-subtitle">AI Analytics Platform</div>
+    <div id="login-divider"></div>
+    <div class="login-field">
+      <label class="login-label" for="login-email">Email</label>
+      <input type="email" id="login-email" class="login-input" placeholder="Enter your email" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="login-field">
+      <label class="login-label" for="login-password">Password</label>
+      <input type="password" id="login-password" class="login-input" placeholder="Enter your password">
+    </div>
+    <div id="login-error">Invalid credentials</div>
+    <button id="login-btn">Access Platform</button>
+  </div>
+</div>
+
+<!-- Loader -->
+<div id="loader"><div id="loader-ring"></div></div>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Galaxy BG -->
+<div id="galaxy-bg" class="blurred"></div>
+<canvas id="nebula-canvas"></canvas>
+<canvas id="ambient-particles"></canvas>
+<canvas id="shooting-stars-canvas"></canvas>
+
+<!-- Globe -->
+<div id="globe-wrap">
+  <div id="purple-glow"></div>
+  <canvas id="globe-canvas"></canvas>
+</div>
+<div id="globe-trail"></div>
+
+<!-- Hero section -->
+<div id="hero">
+  <div id="welcome-block">
+    <svg id="welcome-text" viewBox="0 10 520 95" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+      <defs>
+        <linearGradient id="welcome-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#d8cff0"/>
+        </linearGradient>
+        <linearGradient id="welcome-fill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#d8cff0"/>
+        </linearGradient>
+        <filter id="welcome-glow" x="-20%" y="-40%" width="140%" height="180%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <text id="welcome-svg-text" x="50%" y="88" text-anchor="middle" dominant-baseline="auto"><tspan font-size="72px" dy="-1">W</tspan><tspan dy="1">elcome</tspan></text>
+    </svg>
+    <div id="username-text">Ekso</div>
+    <div id="desc-text">Autolyze is an AI-powered analytics platform that generates intelligent insights from your datasets.</div>
+  </div>
+</div>
+
+<!-- Scroll indicator -->
+<div id="scroll-indicator" onclick="scrollToDataAnalysis()">
+  <span>Explore</span>
+  <div id="scroll-arrow">↓</div>
+</div>
+
+<section id="da-section" class="section-wrap">
+  <div id="da-inner" class="section-inner">
+
+    <div id="da-header" class="section-header">
+      <h2 id="da-title" class="section-title">Data <em>Analysis</em></h2>
+      <p id="da-sub" class="section-sub">Upload a dataset and let Autolyze AI surface patterns, correlations and insights instantly.</p>
+    </div>
+
+    <!-- STATE 1: UPLOAD -->
+    <div id="da-drop-zone" class="drop-zone">
+      <input type="file" id="da-file-input" accept=".csv,.xlsx,.xls" style="display:none">
+      <span id="da-drop-icon" class="drop-icon">📊</span>
+      <p id="da-drop-main" class="drop-main">Drag &amp; Drop Dataset Here</p>
+      <p id="da-drop-sub" class="drop-sub">or <span id="da-drop-browse" class="drop-browse">click to upload</span></p>
+      <p id="da-drop-hint" class="drop-hint">Supports CSV · XLSX · XLS</p>
+    </div>
+
+    <!-- STATE 2: PROCESSING -->
+    <div id="da-processing">
+      <canvas id="da-neural-canvas"></canvas>
+      <div id="da-status-wrap" class="status-wrap">
+        <span id="da-status-text" class="status-text">reading dataset...</span>
+      </div>
+      <div id="da-progress-track" class="progress-track"><div id="da-progress-bar" class="progress-bar"></div></div>
+      <p id="da-processing-sub" class="processing-sub">Autolyze AI is analysing your data</p>
+      <button id="da-cancel-btn" class="action-btn" onclick="daCancelAnalysis()"
+              title="Stop this analysis and start over with another dataset">Cancel</button>
+    </div>
+
+    <!-- STATE 3: RESULTS -->
+    <div id="da-results" class="results-container">
+      <!-- Row 1: Preview + Insights -->
+      <div id="da-top-row">
+        <div class="da-panel" id="da-preview-panel">
+          <div class="da-panel-title">Dataset Preview</div>
+          <div id="da-table-wrap">
+            <table id="da-preview-table">
+              <thead id="da-thead"></thead>
+              <tbody id="da-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="da-panel" id="da-insights-panel">
+          <div class="da-panel-title">AI Insights</div>
+          <div id="da-insights-list"></div>
+        </div>
+      </div>
+      <!-- Row 2: Charts -->
+      <div class="da-panel" id="da-charts-panel">
+        <div class="da-panel-title" style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;">
+          <span>Auto-Generated Charts</span>
+          <span style="display:flex;gap:.5rem;">
+            <button id="da-new-btn" class="action-btn" style="font-size:.72rem;padding:.35rem .9rem;" onclick="daResetAnalysis()" title="Clear these results and upload another dataset">New Analysis</button>
+            <button id="da-export-btn" class="action-btn" style="font-size:.72rem;padding:.35rem .9rem;" onclick="daExportPowerBI()" title="Download an Excel workbook of all computed results, ready to import into Power BI">Export to Power BI</button>
+          </span>
+        </div>
+        <div id="da-charts-row">
+          <canvas id="da-chart-bar"  class="da-chart"></canvas>
+          <canvas id="da-chart-line" class="da-chart"></canvas>
+          <canvas id="da-chart-doughnut" class="da-chart"></canvas>
+        </div>
+      </div>
+      <!-- Row 3: Computed ML results -->
+      <div id="da-ml-row">
+        <div class="da-panel" id="da-models-panel">
+          <div class="da-panel-title">Model Performance</div>
+          <div id="da-models-body"></div>
+        </div>
+        <div class="da-panel" id="da-segments-panel">
+          <div class="da-panel-title">Customer Segments</div>
+          <div id="da-segments-body"></div>
+        </div>
+      </div>
+      <!-- Row 4: AI Chat -->
+      <div class="da-panel" id="da-chat-panel">
+        <div class="da-panel-title">Ask AI about your data <span id="da-ai-status"></span></div>
+        <div id="da-chat-messages"></div>
+        <div id="da-chat-input-row">
+          <input id="da-chat-input" type="text" placeholder="e.g. What is the highest revenue month?">
+          <button id="da-chat-send" onclick="daChatSend()">Send</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer">© 2025 Autolyze · AI Analytics Platform</div>
+
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+{
+  "pandas": {
+    "m5": {
+      "input_rows": 58230,
+      "t_etl": 0.02,
+      "rows_after_clean": 58230,
+      "dupes_removed": 0,
+      "t_forecast": 2.36,
+      "forecasting": {
+        "skipped": false,
+        "skip_reason": null,
+        "target_column": "Revenue",
+        "time_column": "Date",
+        "n_features": 12,
+        "train_rows": 46584,
+        "test_rows": 11646,
+        "models": {
+          "Linear Regression": {
+            "rmse": 508.2232,
+            "mae": 365.9236,
+            "r2": 0.964
+          },
+          "Random Forest": {
+            "rmse": 318.6172,
+            "mae": 226.0118,
+            "r2": 0.9858
+          },
+          "Gradient Boosting": {
+            "rmse": 297.1231,
+            "mae": 208.7703,
+            "r2": 0.9877
+          }
+        },
+        "best_model": "Gradient Boosting",
+        "feature_importance": {
+          "UnitsSold": 0.966,
+          "AvgSellPrice": 0.0142,
+          "Category": 0.0071,
+          "Year": 0.0046,
+          "Store": 0.0041,
+          "State": 0.0009,
+          "_day": 0.0007,
+          "_month": 0.0006,
+          "Month": 0.0006,
+          "_weekday": 0.0006
+        }
+      },
+      "t_segment": 1.38,
+      "segmentation": {
+        "skipped": false,
+        "skip_reason": null,
+        "method": "K-Means on numeric features (no customer/date columns found)",
+        "k": 2,
+        "silhouette": 0.3382,
+        "n_entities": 58230,
+        "segments": [
+          {
+            "segment": 0,
+            "size": 38866,
+            "profile": {
+              "UnitsSold": 540.44,
+              "AvgSellPrice": 5.36,
+              "Month": 6.34,
+              "Year": 2013.25,
+              "SNAP": 0.33
+            }
+          },
+          {
+            "segment": 1,
+            "size": 19364,
+            "profile": {
+              "UnitsSold": 2371.53,
+              "AvgSellPrice": 3.22,
+              "Month": 6.32,
+              "Year": 2013.25,
+              "SNAP": 0.33
+            }
+          }
+        ]
+      },
+      "t_forward": 0.03,
+      "forward_forecast": {
+        "title": "Revenue forecast",
+        "labels": [
+          "2016-06",
+          "2016-07",
+          "2016-08",
+          "2016-09",
+          "2016-10",
+          "2016-11"
+        ],
+        "values": [
+          3513091.93,
+          3496066.08,
+          3614429.39,
+          3619990.81,
+          3621582.52,
+          3619990.81
+        ],
+        "model": "Gradient Boosting (histogram-based)",
+        "horizon": 6,
+        "freq": "MS"
+      },
+      "t_summary": 0.05,
+      "summary": {
+        "rows": 58230,
+        "columns": 11,
+        "column_names": [
+          "Date",
+          "Store",
+          "State",
+          "Category",
+          "UnitsSold",
+          "Revenue",
+          "AvgSellPrice",
+          "Weekday",
+          "Month",
+          "Year",
+          "SNAP"
+        ],
+        "top_correlations": [
+          {
+            "col_a": "UnitsSold",
+            "col_b": "Revenue",
+            "correlation": 0.9657826238545074
+          },
+          {
+            "col_a": "UnitsSold",
+            "col_b": "AvgSellPrice",
+            "correlation": 0.7657443003244011
+          },
+          {
+            "col_a": "Revenue",
+            "col_b": "AvgSellPrice",
+            "correlation": 0.6329936271187234
+          },
+          {
+            "col_a": "Revenue",
+            "col_b": "Year",
+            "correlation": 0.2293802864970124
+          },
+          {
+            "col_a": "Month",
+            "col_b": "Year",
+            "correlation": 0.17088287134987484
+          }
+        ],
+        "timeseries_points": 65,
+        "timeseries_title": "Revenue over time",
+        "category_totals": {
+          "title": "Revenue by State",
+          "labels": [
+            "CA",
+            "TX",
+            "WI"
+          ],
+          "values": [
+            85967359.03,
+            55120642.03,
+            50489544.98
+          ]
+        },
+        "distribution_label": "State distribution"
+      }
+    },
+    "online_retail_II": {
+      "input_rows": 1067371,
+      "t_etl": 0.59,
+      "rows_after_clean": 779425,
+      "dupes_removed": 34335,
+      "t_forecast": 3.93,
+      "forecasting": {
+        "skipped": false,
+        "skip_reason": null,
+        "target_column": "Price",
+        "time_column": "InvoiceDate",
+        "n_features": 6,
+        "train_rows": 400000,
+        "test_rows": 100000,
+        "models": {
+          "Linear Regression": {
+            "rmse": 28.4731,
+            "mae": 2.446,
+            "r2": 0.0009
+          },
+          "Random Forest": {
+            "rmse": 30.3415,
+            "mae": 2.4079,
+            "r2": -0.1345
+          },
+          "Gradient Boosting": {
+            "rmse": 28.5392,
+            "mae": 2.4546,
+            "r2": -0.0037
+          }
+        },
+        "best_model": "Linear Regression",
+        "feature_importance": {
+          "Customer ID": 0.7531,
+          "_weekday": 0.0643,
+          "Country": 0.0594,
+          "_day": 0.0515,
+          "_month": 0.0454,
+          "Quantity": 0.0263
+        }
+      },
+      "t_segment": 1.38,
+      "segmentation": {
+        "skipped": false,
+        "skip_reason": null,
+        "method": "K-Means on RFM (Recency/Frequency/Monetary, log-scaled)",
+        "k": 2,
+        "silhouette": 0.4272,
+        "n_entities": 5878,
+        "segments": [
+          {
+            "segment": 0,
+            "size": 3099,
+            "profile": {
+              "recency": 79.89,
+              "frequency": 230.33,
+              "monetary": 727.94
+            }
+          },
+          {
+            "segment": 1,
+            "size": 2779,
+            "profile": {
+              "recency": 334.64,
+              "frequency": 23.62,
+              "monetary": 90.93
+            }
+          }
+        ]
+      },
+      "t_forward": 0.02,
+      "forward_forecast": {},
+      "t_summary": 0.26,
+      "summary": {
+        "rows": 779425,
+        "columns": 8,
+        "column_names": [
+          "Invoice",
+          "StockCode",
+          "Description",
+          "Quantity",
+          "InvoiceDate",
+          "Price",
+          "Customer ID",
+          "Country"
+        ],
+        "top_correlations": [
+          {
+            "col_a": "Quantity",
+            "col_b": "Customer ID",
+            "correlation": 0.008569185682269382
+          },
+          {
+            "col_a": "Price",
+            "col_b": "Customer ID",
+            "correlation": 0.007503816332579007
+          },
+          {
+            "col_a": "Quantity",
+            "col_b": "Price",
+            "correlation": 0.004880185578937372
+          }
+        ],
+        "timeseries_points": 25,
+        "timeseries_title": "Revenue (Quantity x Price) over time",
+        "category_totals": {
+          "title": "Revenue (Quantity x Price) by Country",
+          "labels": [
+            "United Kingdom",
+            "EIRE",
+            "Netherlands",
+            "Germany",
+            "France",
+            "Australia",
+            "Spain",
+            "Switzerland"
+          ],
+          "values": [
+            14389234.92,
+            616570.54,
+            554038.09,
+            425019.71,
+            348768.96,
+            169283.46,
+            108332.49,
+            100061.94
+          ]
+        },
+        "distribution_label": "Country distribution"
+      }
+    }
+  },
+  "spark": {
+    "m5": {
+      "input_rows": 58230,
+      "t_etl": 10.09,
+      "rows_after_clean": 58230,
+      "time_col": "Date",
+      "t_forecast": 25.78,
+      "forecasting": {
+        "skipped": false,
+        "skip_reason": null,
+        "target_column": "Revenue",
+        "time_column": "Date",
+        "n_features": 12,
+        "train_rows": 46584,
+        "test_rows": 11646,
+        "models": {
+          "Linear Regression": {
+            "rmse": 508.3966,
+            "mae": 366.0887,
+            "r2": 0.964
+          },
+          "Random Forest": {
+            "rmse": 472.1885,
+            "mae": 311.7224,
+            "r2": 0.9689
+          },
+          "Gradient Boosting": {
+            "rmse": 347.2485,
+            "mae": 239.7776,
+            "r2": 0.9832
+          }
+        },
+        "best_model": "Gradient Boosting",
+        "feature_importance": {
+          "UnitsSold": 0.4593,
+          "AvgSellPrice": 0.2267,
+          "Category_idx": 0.176,
+          "Store_idx": 0.0926,
+          "Weekday_idx": 0.0144,
+          "Year": 0.0127,
+          "State_idx": 0.0069,
+          "_weekday": 0.004,
+          "_day": 0.003,
+          "SNAP": 0.0026
+        }
+      },
+      "t_segment": 33.05,
+      "segmentation": {
+        "skipped": false,
+        "skip_reason": null,
+        "method": "Spark MLlib K-Means on numeric features (no customer/date columns found)",
+        "k": 2,
+        "silhouette": 0.5215,
+        "n_entities": 58230,
+        "segments": [
+          {
+            "segment": 0,
+            "size": 38866,
+            "profile": {
+              "UnitsSold": 540.44,
+              "AvgSellPrice": 5.36,
+              "Month": 6.34,
+              "Year": 2013.25,
+              "SNAP": 0.33
+            }
+          },
+          {
+            "segment": 1,
+            "size": 19364,
+            "profile": {
+              "UnitsSold": 2371.53,
+              "AvgSellPrice": 3.22,
+              "Month": 6.32,
+              "Year": 2013.25,
+              "SNAP": 0.33
+            }
+          }
+        ]
+      }
+    },
+    "online_retail_II": {
+      "input_rows": 1067371,
+      "t_etl": 10.11,
+      "rows_after_clean": 779425,
+      "time_col": "InvoiceDate",
+      "t_forecast": 61.13,
+      "forecasting": {
+        "skipped": false,
+        "skip_reason": null,
+        "target_column": "Price",
+        "time_column": "InvoiceDate",
+        "n_features": 6,
+        "train_rows": 400630,
+        "test_rows": 100158,
+        "models": {
+          "Linear Regression": {
+            "rmse": 20.2122,
+            "mae": 2.3053,
+            "r2": -0.0007
+          },
+          "Random Forest": {
+            "rmse": 20.869,
+            "mae": 2.4158,
+            "r2": -0.0668
+          },
+          "Gradient Boosting": {
+            "rmse": 36.8667,
+            "mae": 2.3131,
+            "r2": -2.3294
+          }
+        },
+        "best_model": "Linear Regression",
+        "feature_importance": {
+          "Customer_ID": 0.354,
+          "Country_idx": 0.1863,
+          "_month": 0.1592,
+          "_day": 0.1327,
+          "Quantity": 0.1008,
+          "_weekday": 0.0671
+        }
+      },
+      "t_segment": 23.16,
+      "segmentation": {
+        "skipped": false,
+        "skip_reason": null,
+        "method": "Spark MLlib K-Means on RFM (Recency/Frequency/Monetary, log-scaled)",
+        "k": 2,
+        "silhouette": 0.5974,
+        "n_entities": 5878,
+        "segments": [
+          {
+            "segment": 0,
+            "size": 3102,
+            "profile": {
+              "recency": 80.45,
+              "frequency": 230.14,
+              "monetary": 727.36
+            }
+          },
+          {
+            "segment": 1,
+            "size": 2776,
+            "profile": {
+              "recency": 335.43,
+              "frequency": 23.6,
+              "monetary": 90.89
+            }
+          }
+        ]
+      }
+    }
+  },
+  "benchmark": [
+    {
+      "rows": 5000,
+      "pandas": {
+        "etl": 0.01,
+        "forecast": 0.27,
+        "segment": 0.06,
+        "total": 0.34
+      },
+      "spark": {
+        "etl": 0.83,
+        "forecast": 7.17,
+        "segment": 12.73,
+        "total": 20.73
+      }
+    },
+    {
+      "rows": 25000,
+      "pandas": {
+        "etl": 0.02,
+        "forecast": 0.33,
+        "segment": 0.15,
+        "total": 0.5
+      },
+      "spark": {
+        "etl": 1.25,
+        "forecast": 9.59,
+        "segment": 21.12,
+        "total": 31.96
+      }
+    },
+    {
+      "rows": 100000,
+      "pandas": {
+        "etl": 0.06,
+        "forecast": 0.64,
+        "segment": 0.29,
+        "total": 0.99
+      },
+      "spark": {
+        "etl": 2.22,
+        "forecast": 16.34,
+        "segment": 27.93,
+        "total": 46.49
+      }
+    },
+    {
+      "rows": 500000,
+      "pandas": {
+        "etl": 0.39,
+        "forecast": 3.06,
+        "segment": 1.18,
+        "total": 4.63
+      },
+      "spark": {
+        "etl": 9.42,
+        "forecast": 60.22,
+        "segment": 50.25,
+        "total": 119.89
+      }
+    },
+    {
+      "rows": 1067371,
+      "pandas": {
+        "etl": 0.69,
+        "forecast": 4.35,
+        "segment": 1.45,
+        "total": 6.49
+      },
+      "spark": {
+        "etl": 9.29,
+        "forecast": 61.89,
+        "segment": 25.4,
+        "total": 96.58
+      }
+    }
+  ],
+  "meta": {
+    "m5": {
+      "rows": 58230,
+      "cols": 12,
+      "columns": [
+        "Date",
+        "Store",
+        "State",
+        "Category",
+        "UnitsSold",
+        "Revenue",
+        "AvgSellPrice",
+        "Weekday",
+        "Month",
+        "Year",
+        "SNAP",
+        "Event"
+      ],
+      "bytes": 3961542
+    },
+    "online_retail_II": {
+      "rows": 1067371,
+      "cols": 8,
+      "columns": [
+        "Invoice",
+        "StockCode",
+        "Description",
+        "Quantity",
+        "InvoiceDate",
+        "Price",
+        "Customer ID",
+        "Country"
+      ],
+      "bytes": 94850204
+    },
+    "spark_min_rows": 1000000,
+    "ml_max_rows": 500000
+  }
+}

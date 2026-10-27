@@ -1,0 +1,158 @@
+{
+  "total_rows": 58327370,
+  "time_col": "_composed_date",
+  "cutoff_unix": 1428336000.0,
+  "test_rows": 200647,
+  "runs": [
+    {
+      "requested": 100000,
+      "train_rows": 99635,
+      "test_rows": 200647,
+      "t_s": 37.4,
+      "models": {
+        "Linear Regression": {
+          "rmse": 2.298,
+          "mae": 0.961,
+          "r2": 0.5981
+        },
+        "Random Forest": {
+          "rmse": 1.9229,
+          "mae": 0.6856,
+          "r2": 0.7186
+        },
+        "Gradient Boosting": {
+          "rmse": 2.1877,
+          "mae": 0.7047,
+          "r2": 0.6358
+        }
+      },
+      "best": "Random Forest",
+      "importance": {
+        "lag_1": 0.4093,
+        "lag_7": 0.2449,
+        "event_impact": 0.174,
+        "sell_price": 0.0382
+      }
+    },
+    {
+      "requested": 500000,
+      "train_rows": 499010,
+      "test_rows": 200647,
+      "t_s": 93.4,
+      "models": {
+        "Linear Regression": {
+          "rmse": 2.2883,
+          "mae": 0.9609,
+          "r2": 0.6015
+        },
+        "Random Forest": {
+          "rmse": 1.8964,
+          "mae": 0.6934,
+          "r2": 0.7263
+        },
+        "Gradient Boosting": {
+          "rmse": 1.9976,
+          "mae": 0.6885,
+          "r2": 0.6963
+        }
+      },
+      "best": "Random Forest",
+      "importance": {
+        "lag_1": 0.4466,
+        "lag_7": 0.2366,
+        "event_impact": 0.1821,
+        "sell_price": 0.0351
+      }
+    },
+    {
+      "requested": 2000000,
+      "train_rows": 1998080,
+      "test_rows": 200647,
+      "t_s": 303.9,
+      "models": {
+        "Linear Regression": {
+          "rmse": 2.2839,
+          "mae": 0.9593,
+          "r2": 0.603
+        },
+        "Random Forest": {
+          "rmse": 1.87,
+          "mae": 0.6825,
+          "r2": 0.7339
+        },
+        "Gradient Boosting": {
+          "rmse": 2.015,
+          "mae": 0.6997,
+          "r2": 0.691
+        }
+      },
+      "best": "Random Forest",
+      "importance": {
+        "lag_1": 0.4607,
+        "lag_7": 0.2466,
+        "event_impact": 0.1774,
+        "sell_price": 0.0343
+      }
+    },
+    {
+      "requested": 5000000,
+      "train_rows": 4997179,
+      "test_rows": 200647,
+      "t_s": 679.1,
+      "models": {
+        "Linear Regression": {
+          "rmse": 2.2827,
+          "mae": 0.9592,
+          "r2": 0.6034
+        },
+        "Random Forest": {
+          "rmse": 1.8534,
+          "mae": 0.6739,
+          "r2": 0.7386
+        },
+        "Gradient Boosting": {
+          "rmse": 1.9296,
+          "mae": 0.6868,
+          "r2": 0.7166
+        }
+      },
+      "best": "Random Forest",
+      "importance": {
+        "lag_1": 0.4601,
+        "lag_7": 0.2673,
+        "event_impact": 0.1772,
+        "sell_price": 0.0332
+      }
+    },
+    {
+      "requested": 12000000,
+      "train_rows": 11995704,
+      "test_rows": 200647,
+      "t_s": 2317.1,
+      "models": {
+        "Linear Regression": {
+          "rmse": 2.2811,
+          "mae": 0.9579,
+          "r2": 0.604
+        },
+        "Random Forest": {
+          "rmse": 1.8677,
+          "mae": 0.6816,
+          "r2": 0.7345
+        },
+        "Gradient Boosting": {
+          "rmse": 1.9461,
+          "mae": 0.6776,
+          "r2": 0.7118
+        }
+      },
+      "best": "Random Forest",
+      "importance": {
+        "lag_1": 0.4653,
+        "lag_7": 0.2592,
+        "event_impact": 0.1813,
+        "sell_price": 0.0339
+      }
+    }
+  ]
+}
