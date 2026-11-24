@@ -47,13 +47,15 @@ of distributed processing can be measured rather than assumed.
 ```bash
 python -m venv .venv
 .venv\Scripts\Activate.ps1          # Windows
+source .venv/bin/activate           # macOS / Linux
 pip install -r backend/requirements.txt
 ```
 
 Configure credentials:
 
 ```bash
-copy .env.example .env
+copy .env.example .env              # Windows
+cp .env.example .env                # macOS / Linux
 ```
 
 Then fill in `.env`:
@@ -69,7 +71,14 @@ Start the local LLM server and load an instruction-tuned model
 Run:
 
 ```bash
-.\start_autolyze.ps1
+.\start_autolyze.ps1               # Windows: loads .env and starts the server
+```
+
+On macOS / Linux:
+
+```bash
+set -a; source .env; set +a
+cd backend && uvicorn api.main:app --host 127.0.0.1 --port 8000
 ```
 
 Then open <http://127.0.0.1:8000>.
@@ -92,7 +101,8 @@ python scripts/prepare_m5.py "path/to/m5/files"
 ```
 
 This unpivots 1,941 day columns and joins the calendar and weekly price tables,
-producing ~59.2M records and a daily store-category aggregate for analysis.
+producing ~59.2M records (`data/m5_unified.parquet`) and a daily store-category
+aggregate (`data/m5_daily_store_category.csv`) to upload for analysis.
 
 ---
 
@@ -102,7 +112,7 @@ producing ~59.2M records and a daily store-category aggregate for analysis.
 python -m pytest -q
 ```
 
-50 tests covering the pipeline's methodological guarantees: that the train/test
+77 tests covering the pipeline's methodological guarantees: that the train/test
 split is chronological rather than random, that skewed monetary values do not
 produce a singleton cluster, that segment profiles are reported in original
 units, that RFM is aggregated over each customer's whole history rather than a
@@ -110,7 +120,7 @@ row sample, that totals estimated from a sample are scaled and labelled as
 estimates, and that each stage degrades with a stated reason rather than
 failing when a dataset cannot support it.
 
-The 46 tests in `backend/tests/test_pipeline.py` need no Java, Spark or LLM and
+The 65 tests in `backend/tests/test_pipeline.py` need no Java, Spark or LLM and
 run in seconds. The 12 in `backend/tests/test_spark_engine.py` exercise the
 distributed path against real Spark and skip automatically when no JDK is
 present, so the same command works either way.
@@ -124,8 +134,9 @@ python report_figures/make_figures.py
 ```
 
 Reads `results.json` and `bigscale.json` - the recorded output of the evaluation runs -
-and regenerates the result figures. No values are hardcoded. The PNGs themselves are not
-committed: they are build output, and the copies that matter are embedded in the report.
+and regenerates the result figures. No values are hardcoded.
+
+![Single-machine vs distributed execution time](report_figures/fig_engine.png)
 
 ---
 

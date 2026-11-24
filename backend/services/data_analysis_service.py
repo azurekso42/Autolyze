@@ -528,7 +528,7 @@ def _build_charts(df: pd.DataFrame, roles: ColumnRoles, scale: float = 1.0):
             }
 
         cat_cols = [
-            c for c in df.select_dtypes(include="object").columns
+            c for c in df.select_dtypes(include=["object", "string"]).columns
             if 2 <= df[c].nunique() <= 50
         ]
         if cat_cols:
@@ -550,7 +550,7 @@ def _build_distribution(df: pd.DataFrame, numeric_df: pd.DataFrame, scale: float
     equal-width bin of the first numeric column."""
     try:
         cat_cols = [
-            c for c in df.select_dtypes(include="object").columns
+            c for c in df.select_dtypes(include=["object", "string"]).columns
             if 2 <= df[c].nunique() <= 50
         ]
         note = _sampled_note(scale)
@@ -625,7 +625,7 @@ def _find_datetime_col(df: pd.DataFrame):
     for col in df.columns:
         if pd.api.types.is_datetime64_any_dtype(df[col]):
             return col, df[col]
-    for col in df.select_dtypes(include="object").columns:
+    for col in df.select_dtypes(include=["object", "string"]).columns:
         # Probe a sample first so non-date text columns are rejected cheaply;
         # only the winning column gets a full parse.
         probe = df[col].dropna()

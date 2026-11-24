@@ -19,6 +19,7 @@ Java is unavailable.
 from __future__ import annotations
 
 import glob
+import shutil
 import os
 import re
 import sys
@@ -47,7 +48,10 @@ _spark = None
 
 def _ensure_java() -> None:
     home = os.environ.get("JAVA_HOME", "")
-    if home and os.path.exists(os.path.join(home, "bin", "java.exe")):
+    if home and any(os.path.exists(os.path.join(home, "bin", exe)) for exe in ("java", "java.exe")):
+        return
+    # macOS / Linux: a java on PATH is enough, Spark finds it without JAVA_HOME.
+    if shutil.which("java"):
         return
     for pattern in (
         r"C:\Program Files\Microsoft\jdk-*",
@@ -59,7 +63,7 @@ def _ensure_java() -> None:
             os.environ["JAVA_HOME"] = hits[0]
             logger.info("Spark: using Java at %s", hits[0])
             return
-    raise RuntimeError("No Java runtime found (JAVA_HOME unset and no JDK in Program Files).")
+    raise RuntimeError("No Java runtime found (JAVA_HOME unset, no java on PATH, no JDK in Program Files).")
 
 
 def _get_spark():
@@ -134,7 +138,7 @@ def spark_etl_file(path: str):
     time_col = next((c for c, t in sdf.dtypes if t in ("timestamp", "date", "timestamp_ntz")), None)
     if time_col is None:
         probe = sdf.limit(5000).toPandas()
-        for col in probe.select_dtypes(include="object").columns:
+        for col in probe.select_dtypes(include=["object", "string"]).columns:
             s = probe[col].dropna()
             if s.empty:
                 continue
@@ -208,7 +212,7 @@ def _prep_pandas(pdf: pd.DataFrame):
             time_col = col
             break
     if time_col is None:
-        for col in pdf.select_dtypes(include="object").columns:
+        for col in pdf.select_dtypes(include=["object", "string"]).columns:
             # Probe a sample first so non-date text columns are rejected
             # cheaply; only the winning column gets a full parse.
             probe = pdf[col].dropna()
@@ -224,7 +228,7 @@ def _prep_pandas(pdf: pd.DataFrame):
                 time_col = col
                 break
 
-    for col in pdf.select_dtypes(include="object").columns:
+    for col in pdf.select_dtypes(include=["object", "string"]).columns:
         pdf[col] = pdf[col].map(lambda v: None if pd.isna(v) else str(v))
     return pdf, time_col
 

@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Datasets (download separately, see README)
+data/
+*.csv
+*.parquet
+
+
+# Spark / OS / editor
+spark-warehouse/
+metastore_db/
+derby.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

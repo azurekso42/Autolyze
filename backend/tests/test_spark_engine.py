@@ -31,7 +31,7 @@ def _spark_available() -> bool:
 
 pytestmark = pytest.mark.skipif(
     not _spark_available(),
-    reason="Spark path needs pyspark and a JDK (JAVA_HOME or a JDK in Program Files)",
+    reason="Spark path needs pyspark and a JDK (JAVA_HOME, java on PATH, or a JDK in Program Files)",
 )
 
 
